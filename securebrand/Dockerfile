@@ -24,11 +24,14 @@ RUN sed -i 's/^listen = .*/listen = \/var\/run\/php\/php8.1-fpm.sock/' /usr/loca
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copy existing application directory contents
+# Copy core files first
 COPY composer.json composer.lock artisan ./
 RUN composer install --no-dev --optimize-autoloader
+
+# Copy remaining application files
 COPY . /var/www
 
-# Set executable permissions on artisan
+# Set permissions
 RUN chmod +x artisan
 RUN chown -R www-data:www-data /var/www
 RUN chmod -R 755 /var/www/public
