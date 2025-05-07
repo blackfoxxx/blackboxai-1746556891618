@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Copy existing application directory contents
-COPY composer.json composer.lock ./
+COPY composer.json composer.lock artisan ./
 RUN composer install --no-dev --optimize-autoloader
 COPY . /var/www
 
