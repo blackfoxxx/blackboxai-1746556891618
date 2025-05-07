@@ -9,8 +9,9 @@ services:
     container_name: securebrand-app
     restart: unless-stopped
     working_dir: /var/www
-    volumes:
-      - ./:/var/www
+    # Removed host volume mount to preserve container dependencies
+    # volumes:
+    #   - ./:/var/www
     networks:
       - securebrand-network
     depends_on:
@@ -21,9 +22,10 @@ services:
     container_name: securebrand-webserver
     restart: unless-stopped
     ports:
-      - "8000:80"
+      - "8998:80"
     volumes:
-      - ./:/var/www
+      # Removed host volume mount to preserve container dependencies
+      # - ./:/var/www
       - ./nginx/conf.d:/etc/nginx/conf.d
     networks:
       - securebrand-network
@@ -40,7 +42,7 @@ services:
       MYSQL_USER: securebranduser
       MYSQL_PASSWORD: securebrandpass
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - dbdata:/var/lib/mysql
     networks:
