@@ -24,7 +24,7 @@
         "post-install-cmd": [
             "chmod -R 755 bootstrap\/cache",
             "php artisan cache:clear"
-        ],
+        ]
     },
     "config": {
         "optimize-autoloader": true,
