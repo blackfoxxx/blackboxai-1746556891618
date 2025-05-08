@@ -1,10 +1,16 @@
 # Use official PHP image with necessary extensions
-FROM php:8.1-fpm
+FROM php:8.1-fpm-bullseye
 
 # Set working directory
 WORKDIR /var/www
 
 # Install system dependencies
+RUN apt-get update || (apt-get clean && rm -rf /var/lib/apt/lists/* && apt-get update)
+RUN apt-get install -y tzdata
+RUN ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
+RUN dpkg-reconfigure -f noninteractive tzdata
+RUN apt-get install -y gnupg2 dirmngr
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138
 RUN apt-get update && apt-get install -y \
     git \
     curl \
